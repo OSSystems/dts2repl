@@ -231,7 +231,7 @@ def get_node_prop(node, prop, default=None, inherit=False):
     elif prop in ('interrupts', 'reg', 'ranges'):
         val = val.to_nums()
     elif prop in ('#address-cells', '#size-cells', '#interrupt-cells', 'cc-num', 'clock-frequency',
-                  'riscv,ndev'):
+                  'riscv,ndev', 'vref-mv'):
         val = val.to_num()
     elif prop in ('interrupt-parent',):
         val = val.to_node()
@@ -835,6 +835,10 @@ def generate(filename, override_system_clock_frequency=None):
                 indent.append("%s: %s" % (attr, str(attribs[attr])))
 
         # additional parameters for peripherals
+        if model in ['Analog.STM32C0_ADC', 'Analog.STM32F0_ADC', 'Analog.STM32G0_ADC', 'Analog.STM32L0_ADC']:
+            vref = get_node_prop(node, 'vref-mv', 3300) / 1000
+            indent.append(f'referenceVoltage: {vref}')
+            indent.append('externalEventFrequency: 1000')
         if model == 'IRQControllers.PlatformLevelInterruptController':
             # 1023 is currently maximum value supported by the PLIC model in Renode
             ndev = min(1023, get_node_prop(node, 'riscv,ndev', 1023))

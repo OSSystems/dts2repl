@@ -1,0 +1,16 @@
+flash: MTD.STM32F4_FlashController @ sysbus 0x40022000
+    flash: flash0
+
+sysbus:
+    init:
+        Tag <0x40002C00, 0x40002FFF> "WWDG"
+        Tag <0x40003000, 0x400033FF> "IWDG"
+        Tag <0x40005C00, 0x40005FFF> "USB "
+        Tag <0x40006C00, 0x40006FFF> "CRS"
+        Tag <0x40007000, 0x400073FF> "PWR"
+        Tag <0x40007400, 0x400077FF> "DAC"
+        Tag <0x40007800, 0x40007BFF> "CEC"
+        Tag <0x40010000, 0x400103FF> "SYSCFG"
+        Tag <0x40015800, 0x40015BFF> "DBG"
+        Tag <0x40022000, 0x400223FF> "FLASH_INTERFACE"
+        Tag <0x40023000, 0x400233FF> "CRC"
